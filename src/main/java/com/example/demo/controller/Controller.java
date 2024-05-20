@@ -13,7 +13,9 @@ public class Controller {
 
 
     @GetMapping("/test")
-    public Map test() {
-        return new HashMap();
+    public String test() {
+        return "ok";
     }
+
+
 }
