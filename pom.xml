@@ -20,6 +20,7 @@
 		<spring-cloud-gcp.version>5.1.2</spring-cloud-gcp.version>
 		<spring-cloud.version>2023.0.1</spring-cloud.version>
 		<graalvm.version>17.0.11</graalvm.version>
+		<native.maven.plugin.version>0.10.2</native.maven.plugin.version>
 	</properties>
 	<dependencies>
 		<!--		<dependency>-->
@@ -80,6 +81,32 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!-- Native Image -->
+			<plugin>
+				<groupId>org.graalvm.buildtools</groupId>
+				<artifactId>native-maven-plugin</artifactId>
+				<version>${native.maven.plugin.version}</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>build-native</id>
+						<goals>
+							<goal>build</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<skip>false</skip>
+					<imageName>${project.artifactId}</imageName>
+					<mainClass>com.example.demo.DemoApplication</mainClass>
+					<buildArgs>
+						<buildArg>--no-fallback</buildArg>
+						<buildArg>--report-unsupported-elements-at-runtime</buildArg>
+					</buildArgs>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 	<repositories>
